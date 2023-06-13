@@ -3,17 +3,17 @@ import products from "../controllers/products.controllers";
 
 const router = express.Router();
 
-// retrieve all products or specific products
+// retrieve all products or specific products (sale products included)
 
 router.get("/:id?", async (req, res, next) => {
   try {
     let { id } = req.params;
     let data;
 
-    if (id) {
-      [data] = await products.getOne(parseInt(id));
-    } else if (id === "onsale") {
+    if (id == "onsale") {
       data = await products.getSaleItems();
+    } else if (id) {
+      [data] = await products.getOne(parseInt(id));
     } else {
       data = await products.getAll();
     }
@@ -23,23 +23,6 @@ router.get("/:id?", async (req, res, next) => {
     next(err);
   }
 });
-
-// retrieve products on sale HELLLLLP
-
-// router.get("/:id", async (req, res, next) => {
-//   try {
-//     let { id } = req.params;
-//     let data;
-
-//     if (id === "onsale") {
-//       [data] = await products.getSaleItems();
-//     }
-
-//     res.json(data);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 // adding new product
 router.post("/", async (req, res, next) => {

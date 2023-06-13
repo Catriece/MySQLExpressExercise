@@ -15,12 +15,12 @@ const getOne = async (ProductID) => {
 
 const getSaleItems = async () => {
   return await query(
-    "SELECT ProductID, CategoryID, Name, Price, StockLevel FROM products WHERE OnSale = 1"
+    `SELECT ProductID, CategoryID, Name, Price, StockLevel FROM products WHERE OnSale = ${1}`
   );
 };
 
 const addItem = async (newProduct) => {
-  return await query("INSERT INTO products SET ?", newProduct);
+  return await query("INSERT INTO products SET ?", [newProduct]);
 };
 
 const updateProduct = async (updatedProduct, ProductID) => {
